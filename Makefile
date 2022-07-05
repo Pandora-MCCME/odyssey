@@ -17,6 +17,14 @@ COMPILE_CONCURRENCY=8
 
 .PHONY: clean apply_fmt
 
+deps:
+	apt-get update && apt-get install -y \
+		cmake \
+		gcc \
+		openssl \
+		libssl-dev \
+		postgresql-server-dev-13
+
 clean:
 	rm -fr $(TMP_BIN)
 	rm -fr $(BUILD_TEST_DIR)
@@ -91,6 +99,9 @@ prefix = /usr/local
 
 install:
 	install -D build/sources/odyssey  $(DESTDIR)$(prefix)/bin/odyssey
+
+uninstall:
+	rm $(DESTDIR)$(prefix)/bin/odyssey
 
 start-dev-env:
 	docker-compose build dev
